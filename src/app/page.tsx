@@ -1,7 +1,11 @@
-export default function LoginPage() {
-  return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-      Dashboard
-    </div>
-  );
+import { redirect } from "next/navigation";
+import { auth } from "../../auth";
+
+export default async function HomePage() {
+  const session = await auth();
+  if (session) {
+    redirect("/dashboard");
+  } else {
+    redirect("/login");
+  }
 }

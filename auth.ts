@@ -1,7 +1,12 @@
+import { UserMethods } from "@/database/user.db";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+const userMethods = new UserMethods();
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  pages: {
+    newUser: "/register",
+  },
   providers: [
     Credentials({
       credentials: {
@@ -16,12 +21,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           placeholder: "Type your password...",
         },
       },
-      async authorize() {
-        return {
-          id: "1",
-          name: "dkat",
-          email: "dkat@gmail.com",
-        };
+      async authorize(credentials) {
+        if (!credentials.username || !credentials.password) {
+          return null;
+        }
+
+        const { password, username } = credentials as LoginPayload;
+
+        const user = await userMethods.login({ password, username });
+
+        return user;
       },
     }),
   ],

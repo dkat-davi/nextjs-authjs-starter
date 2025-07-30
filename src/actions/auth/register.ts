@@ -1,8 +1,9 @@
 "use server";
 
-import db from "@/database";
-import { hashSync } from "bcrypt-ts";
+import { UserMethods } from "@/database/user.db";
 import { redirect } from "next/navigation";
+
+const userMethods = new UserMethods();
 
 export default async function register(formData: FormData) {
   const entries = Array.from(formData.entries());
@@ -16,22 +17,13 @@ export default async function register(formData: FormData) {
     throw new Error("Preencha todos os campos");
   }
 
-  const userExists = await db.user.findUnique({
-    where: { username },
-  });
+  const userExists = await userMethods.findUser({ username });
 
   if (userExists) {
-    throw new Error("Usuário já existe");
+    throw new Error("Usuário já existe na base de dados");
   }
 
-  await db.user.create({
-    data: {
-      name,
-      username,
-      password: hashSync(password, 10),
-      role: "admin",
-    },
-  });
+  await userMethods.create({ name, password, username });
 
-  redirect("/");
+  redirect("/login");
 }
