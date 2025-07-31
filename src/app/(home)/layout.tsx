@@ -32,9 +32,20 @@ export default async function RootLayout({
             />
             <h1 className="text-2xl font-bold">Next Auth</h1>
           </div>
-          <form action={logout}>
-            <Button>Logout</Button>
-          </form>
+          <div className="flex gap-8 items-center">
+            <form action={logout}>
+              <Button>Logout</Button>
+            </form>
+            {session?.user?.image && (
+              <Image
+                alt="avatar"
+                className="rounded-full"
+                src={session?.user?.image}
+                width={50}
+                height={50}
+              />
+            )}
+          </div>
         </div>
       </header>
 

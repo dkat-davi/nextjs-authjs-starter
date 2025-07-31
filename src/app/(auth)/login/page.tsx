@@ -27,7 +27,11 @@ export default function LoginPage() {
           href="/login/client"
         />
         <LoginCard icon={FcGoogle} title="Login com Google" href="#" />
-        <LoginCard icon={FaGithub} title="Login com GitHub" href="#" />
+        <LoginCard
+          icon={FaGithub}
+          title="Login com GitHub"
+          href="/login/github"
+        />
         <LoginCard
           icon={MdOutlineEmail}
           title="Login with Magic Link"

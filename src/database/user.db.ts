@@ -5,17 +5,17 @@ export class UserMethods {
   async create(data: CreateUserPayload) {
     try {
       const userExists = await db.user.findUnique({
-        where: { username: data.username },
+        where: { email: data.email },
       });
 
       if (userExists) {
-        throw new Error("Usuário já existe");
+        throw new Error("E-mail já existe");
       }
 
       await db.user.create({
         data: {
           name: data.name,
-          username: data.username,
+          email: data.email,
           password: hashSync(data.password, 10),
           role: "common",
           active: false,
@@ -27,10 +27,10 @@ export class UserMethods {
     }
   }
 
-  async findUser(data: { username: string }) {
+  async findUser(data: { email: string }) {
     const user = await db.user.findUnique({
       where: {
-        username: data.username,
+        email: data.email,
       },
     });
 
@@ -39,7 +39,7 @@ export class UserMethods {
 
   async login(data: LoginPayload) {
     try {
-      const user = await this.findUser({ username: data.username });
+      const user = await this.findUser({ email: data.email });
 
       if (!user) {
         return null;
@@ -51,7 +51,7 @@ export class UserMethods {
         return {
           id: user.id,
           name: user.name,
-          username: user.username,
+          email: user.email,
           role: user.role,
           active: user.active,
         };

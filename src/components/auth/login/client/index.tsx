@@ -23,11 +23,11 @@ export default function LoginClientForm() {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    const username = formData.get("username");
+    const email = formData.get("email");
     const password = formData.get("password");
 
     signIn("credentials", {
-      username,
+      email,
       password,
       redirect: false,
       redirectTo: "/",
@@ -47,17 +47,17 @@ export default function LoginClientForm() {
     <Card className="mx-auto max-w-96 container">
       <CardHeader>
         <CardTitle>Login Client Component</CardTitle>
-        <CardDescription>Entre com usuário e senha</CardDescription>
+        <CardDescription>Entre com e-mail e senha</CardDescription>
       </CardHeader>
       <CardContent>
         <form className="text-left" onSubmit={handleSubmit}>
           <div className="space-y-6">
             <div className="grid w-full max-w-sm items-center gap-1.5">
-              <Label htmlFor="username">Username</Label>
+              <Label htmlFor="email">E-mail</Label>
               <Input
-                name="username"
-                type="username"
-                id="username"
+                name="email"
+                type="email"
+                id="email"
                 required
                 placeholder="Digite seu usuário..."
               />

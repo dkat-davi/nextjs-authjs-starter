@@ -7,23 +7,23 @@ const userMethods = new UserMethods();
 
 export default async function register(formData: FormData) {
   const entries = Array.from(formData.entries());
-  const { name, username, password } = Object.fromEntries(entries) as {
+  const { name, email, password } = Object.fromEntries(entries) as {
     name: string;
-    username: string;
+    email: string;
     password: string;
   };
 
-  if (!name || !username || !password) {
+  if (!name || !email || !password) {
     throw new Error("Preencha todos os campos");
   }
 
-  const userExists = await userMethods.findUser({ username });
+  const userExists = await userMethods.findUser({ email });
 
   if (userExists) {
-    throw new Error("Usuário já existe na base de dados");
+    throw new Error("E-mail já existe na base de dados");
   }
 
-  await userMethods.create({ name, password, username });
+  await userMethods.create({ name, password, email });
 
   redirect("/login");
 }

@@ -20,19 +20,19 @@ export default function LoginForm() {
     <Card className="mx-auto max-w-96 container">
       <CardHeader>
         <CardTitle>Login Server Component</CardTitle>
-        <CardDescription>Entre com usuário e senha</CardDescription>
+        <CardDescription>Entre com e-mail e senha</CardDescription>
       </CardHeader>
       <CardContent>
         <form action={login} className="text-left ">
           <div className="space-y-6">
             <div className="grid w-full max-w-sm items-center gap-1.5">
-              <Label htmlFor="username">Username</Label>
+              <Label htmlFor="email">E-mail</Label>
               <Input
-                name="username"
-                type="username"
-                id="username"
+                name="email"
+                type="email"
+                id="email"
                 required
-                placeholder="Digite seu usuário..."
+                placeholder="Digite seu e-mail..."
               />
             </div>
             <div className="grid w-full max-w-sm items-center gap-1.5">

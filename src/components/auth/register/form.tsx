@@ -40,12 +40,12 @@ export default function RegisterForm() {
                 />
               </div>
               <div className="grid w-full max-w-sm items-center gap-1.5">
-                <Label htmlFor="username">Username</Label>
+                <Label htmlFor="email">E-mail</Label>
                 <Input
-                  name="username"
-                  type="username"
-                  id="username"
-                  placeholder="Usuário"
+                  name="email"
+                  type="email"
+                  id="email"
+                  placeholder="E-mail"
                 />
               </div>
               <div className="grid w-full max-w-sm items-center gap-1.5">

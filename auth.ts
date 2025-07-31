@@ -1,6 +1,7 @@
 import { UserMethods } from "@/database/user.db";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import GithubProvider from "next-auth/providers/github";
 const userMethods = new UserMethods();
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -10,10 +11,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Credentials({
       credentials: {
-        username: {
-          type: "text",
-          label: "Username:",
-          placeholder: "Type your username...",
+        email: {
+          type: "email",
+          label: "E-mail:",
+          placeholder: "Type your e-mail...",
         },
         password: {
           type: "password",
@@ -22,16 +23,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         },
       },
       async authorize(credentials) {
-        if (!credentials.username || !credentials.password) {
+        if (!credentials.email || !credentials.password) {
           return null;
         }
 
-        const { password, username } = credentials as LoginPayload;
+        const { password, email } = credentials as LoginPayload;
 
-        const user = await userMethods.login({ password, username });
+        const user = await userMethods.login({ password, email });
 
         return user;
       },
     }),
+    GithubProvider({}),
   ],
 });
