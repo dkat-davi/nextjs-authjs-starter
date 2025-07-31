@@ -17,8 +17,6 @@ export class UserMethods {
           name: data.name,
           email: data.email,
           password: hashSync(data.password, 10),
-          role: "common",
-          active: false,
         },
       });
     } catch (error) {
@@ -45,15 +43,19 @@ export class UserMethods {
         return null;
       }
 
-      const passwordMatches = compareSync(data.password, user.password);
+      const passwordMatches = compareSync(
+        data.password,
+        user.password as string
+      );
 
       if (passwordMatches) {
         return {
-          id: user.id,
           name: user.name,
+          id: user.id,
           email: user.email,
           role: user.role,
-          active: user.active,
+          active: user.role,
+          image: user.image,
         };
       }
 
