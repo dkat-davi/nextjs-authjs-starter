@@ -17,7 +17,7 @@ model User {
   password      String?
   emailVerified DateTime?
   name          String
-  role          String?
+  role          String    @default("common")
   active        Boolean?
   image         String?
   accounts      Account[]

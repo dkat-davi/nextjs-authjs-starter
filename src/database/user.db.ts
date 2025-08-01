@@ -53,6 +53,7 @@ export class UserMethods {
           name: user.name,
           id: user.id,
           email: user.email,
+          emailVerified: user.emailVerified,
           role: user.role,
           active: user.role,
           image: user.image,

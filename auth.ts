@@ -1,10 +1,25 @@
 import { UserMethods } from "@/database/user.db";
-import NextAuth from "next-auth";
+import NextAuth, { User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import GithubProvider from "next-auth/providers/github";
 import Nodemailer from "next-auth/providers/nodemailer";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import db from "@/database";
+
+declare module "next-auth" {
+  interface Session {
+    user: User & {
+      id: string;
+      email: string;
+      password: string | null;
+      emailVerified: Date | null;
+      name: string;
+      role: string;
+      active: string | null;
+      image: string;
+    };
+  }
+}
 
 const userMethods = new UserMethods();
 
@@ -55,4 +70,24 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       from: process.env.EMAIL_FROM,
     }),
   ],
+  callbacks: {
+    jwt({ token, user }) {
+      return { userData: user, ...token };
+    },
+    session({ session, token }) {
+      const userData = token.userData as {
+        id: string;
+        email: string;
+        password: string | null;
+        emailVerified: Date | null;
+        name: string;
+        role: string;
+        active: string | null;
+        image: string;
+      };
+
+      session.user = { ...session.user, ...userData };
+      return session;
+    },
+  },
 });

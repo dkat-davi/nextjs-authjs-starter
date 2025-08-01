@@ -2,7 +2,7 @@
 
 import ErrorCard from "@/components/auth/login/error-card";
 
-export default function LoginServerError({
+export default function LoginPageError({
   error,
   reset,
 }: {
