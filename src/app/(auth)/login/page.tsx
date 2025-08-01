@@ -35,7 +35,7 @@ export default function LoginPage() {
         <LoginCard
           icon={MdOutlineEmail}
           title="Login with Magic Link"
-          href="#"
+          href="/login/email"
         />
       </div>
     </div>
