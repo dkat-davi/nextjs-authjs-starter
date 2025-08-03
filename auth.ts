@@ -11,7 +11,6 @@ declare module "next-auth" {
     user: User & {
       id: string;
       email: string;
-      password: string | null;
       emailVerified: Date | null;
       name: string;
       role: string;
@@ -78,7 +77,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       const userData = token.userData as {
         id: string;
         email: string;
-        password: string | null;
         emailVerified: Date | null;
         name: string;
         role: string;
@@ -86,7 +84,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         image: string;
       };
 
-      session.user = { ...session.user, ...userData };
+      const { active, email, emailVerified, id, image, name, role } = userData;
+
+      session.user = {
+        ...session.user,
+        id,
+        name,
+        email,
+        emailVerified,
+        image,
+        role,
+        active,
+      };
       return session;
     },
   },
